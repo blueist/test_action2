@@ -1,0 +1,12 @@
+name: 'test-action'
+description: 'my first action for github'
+inputs:
+  input:
+    description: 'input directory'
+    required: true
+  output:
+    description: 'output directory'
+    required: true
+runs:
+  using: 'node12'
+  main: 'index.js'
