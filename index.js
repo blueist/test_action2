@@ -47,7 +47,7 @@ async function test1(){
     // paths.push(path.resolve(output))
 
 
-    const currentText = await fs.readFile(path.join(process.cwd(),'aaa.txt'), "utf8");
+    const currentText = await fs.readFile(path.join(process.cwd(),'../aaa.txt'), "utf8");
 
     // for (let i = 0; i < paths.length; i++) {
     //   console.log(i+" : " +paths[i]) 
