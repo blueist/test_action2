@@ -3,33 +3,38 @@ const fs = require('fs').promises;
 const path = require('path');
 
 async function test1(){
+  const function1 = function (err, files) {
+    //handling error
+    if (err) {
+        return console.log('Unable to scan directory: ' + err);
+    } 
+    //listing all files using forEach
+    files.forEach(function (file) {
+        // Do whatever you want to do with the file
+        console.log(file); 
+    });
+  }
+
   try{
+    paths = []
     const input = core.getInput('input');
     const output = core.getInput('output')
-    const abs1_path = path.join(process.cwd(),input)
-    const abs2_path = path.join(process.cwd(),output)
-    const abs3_path = path.resolve(input)
-    const abs4_path = path.resolve(output)
+
+    paths.push(path.join(process.cwd(),input))
+    paths.push(path.join(process.cwd(),output))
+
+    paths.push(path.resolve(input))
+    paths.push(path.resolve(output))
+
+    paths.push(path.join(process.cwd(),''))
+    paths.push(path.resolve(input))
+
     
-    const function1 = function (err, files) {
-      //handling error
-      if (err) {
-          return console.log('Unable to scan directory: ' + err);
-      } 
-      //listing all files using forEach
-      files.forEach(function (file) {
-          // Do whatever you want to do with the file
-          console.log(file); 
-      });
-  }
-    console.log('a'+abs1_path) 
-    fs.readdir(abs1_path, function1);
-    console.log('c'+abs2_path)    
-    fs.readdir(abs2_path, function1);
-    console.log('e'+abs3_path)    
-	  fs.readdir(abs3_path, function1);
-    console.log('g'+abs4_path)    
-	  fs.readdir(abs4_path, function1);
+    for (let i = 0; i < paths.length; i++) {
+      console.log(i+" : " +paths[i]) 
+      fs.readdir(abs1_path, function1);
+    }
+
   }catch (error) {
     core.setFailed(error.message);
   }
