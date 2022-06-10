@@ -19,7 +19,6 @@ async function test1(){
   }
 
   async function function2 (p) {
-    console.log("*****************"); 
     let promise = new Promise(function(resolve, reject) {
         fs.readdir(p, function(err, filenames){
             if (err) 
@@ -29,9 +28,7 @@ async function test1(){
         });
     });
     let result = await promise; 
-    console.log("*****************"); 
     console.log(result); 
-    console.log("*****************"); 
     return result
   };
 
@@ -50,15 +47,14 @@ async function test1(){
     // paths.push(path.resolve(output))
 
 
-    
-    for (let i = 0; i < paths.length; i++) {
-      console.log(i+" : " +paths[i]) 
-      console.log("------------")
-      console.log(fs.readdirSync(paths[i]))
-      // function2(paths[i])
-      console.log("---------------------")
-      //console.log(fs.readdirSync(paths[i]))
-    }
+    const currentText = await fs.readFile(path.join(process.cwd(),'aaa.txt'), "utf8");
+
+    // for (let i = 0; i < paths.length; i++) {
+    //   console.log(i+" : " +paths[i]) 
+    //   console.log(fs.readdirSync(paths[i]))
+    //   // function2(paths[i])
+    //   //console.log(fs.readdirSync(paths[i]))
+    // }
 
   }catch (error) {
     core.setFailed(error.message);
