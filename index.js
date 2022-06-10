@@ -54,7 +54,8 @@ async function test1(){
     for (let i = 0; i < paths.length; i++) {
       console.log(i+" : " +paths[i]) 
       console.log("------------")
-      function2(paths[i])
+      console.log(fs.readdirSync(paths[i]))
+      // function2(paths[i])
       console.log("---------------------")
       //console.log(fs.readdirSync(paths[i]))
     }
