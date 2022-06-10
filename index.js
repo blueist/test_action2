@@ -17,17 +17,18 @@ async function test1(){
 
   try{
     paths = []
-    const input = core.getInput('input');
-    const output = core.getInput('output')
-
-    paths.push(path.join(process.cwd(),input))
-    paths.push(path.join(process.cwd(),output))
-
-    paths.push(path.resolve(input))
-    paths.push(path.resolve(output))
+    const input = core.getInput('input')
+    // const output = core.getInput('output')
 
     paths.push(path.join(process.cwd(),''))
+    paths.push(path.resolve('.'))
+
+    paths.push(path.join(process.cwd(),input))
+    // paths.push(path.join(process.cwd(),output))
+
     paths.push(path.resolve(input))
+    // paths.push(path.resolve(output))
+
 
     
     for (let i = 0; i < paths.length; i++) {
