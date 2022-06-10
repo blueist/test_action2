@@ -23,10 +23,10 @@ async function test1(){
     paths.push(path.join(process.cwd(),''))
     paths.push(path.resolve('.'))
 
-    paths.push(path.join(process.cwd(),input))
+    // paths.push(path.join(process.cwd(),input))
     // paths.push(path.join(process.cwd(),output))
 
-    paths.push(path.resolve(input))
+    // paths.push(path.resolve(input))
     // paths.push(path.resolve(output))
 
 
