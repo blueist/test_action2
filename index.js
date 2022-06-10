@@ -3,7 +3,8 @@ const fs = require('fs').promises;
 const path = require('path');
 
 async function test1(){
-  
+
+
   const function1 = function (err, files) {
     //handling error
     if (err) {
@@ -16,6 +17,17 @@ async function test1(){
         console.log(file); 
     });
   }
+
+  async function function2 (p) {
+    return new Promise(function(resolve, reject) {
+        fs.readdir(folder, function(err, filenames){
+            if (err) 
+                reject(err); 
+            else 
+                resolve(filenames);
+        });
+    });
+  };
 
   try{
     paths = []
@@ -35,7 +47,9 @@ async function test1(){
     
     for (let i = 0; i < paths.length; i++) {
       console.log(i+" : " +paths[i]) 
-      fs.readdir(paths[i], function1);
+      function2(paths[i])
+        .then((files) => console.log(files))
+        .catch((error) => console.log(error));
       //console.log(fs.readdirSync(paths[i]))
     }
 
