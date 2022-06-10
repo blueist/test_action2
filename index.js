@@ -32,7 +32,7 @@ async function test1(){
     
     for (let i = 0; i < paths.length; i++) {
       console.log(i+" : " +paths[i]) 
-      fs.readdir(abs1_path, function1);
+      fs.readdir(paths[i], function1);
     }
 
   }catch (error) {
