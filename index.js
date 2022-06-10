@@ -20,7 +20,7 @@ async function test1(){
 
   async function function2 (p) {
     return new Promise(function(resolve, reject) {
-        fs.readdir(folder, function(err, filenames){
+        fs.readdir(p, function(err, filenames){
             if (err) 
                 reject(err); 
             else 
