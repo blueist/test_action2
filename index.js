@@ -3,6 +3,7 @@ const fs = require('fs').promises;
 const path = require('path');
 
 async function test1(){
+  
   const function1 = function (err, files) {
     //handling error
     if (err) {
@@ -34,8 +35,8 @@ async function test1(){
     
     for (let i = 0; i < paths.length; i++) {
       console.log(i+" : " +paths[i]) 
-      // fs.readdir(paths[i], function1);
-      console.log(fs.readdirSync(paths[i]))
+      fs.readdir(paths[i], function1);
+      //console.log(fs.readdirSync(paths[i]))
     }
 
   }catch (error) {
