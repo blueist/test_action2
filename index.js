@@ -8,6 +8,7 @@ async function test1(){
     if (err) {
         return console.log('Unable to scan directory: ' + err);
     } 
+    console.log('files :'+files)
     //listing all files using forEach
     files.forEach(function (file) {
         // Do whatever you want to do with the file
