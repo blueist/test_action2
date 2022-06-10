@@ -19,7 +19,7 @@ async function test1(){
   }
 
   async function function2 (p) {
-    return new Promise(function(resolve, reject) {
+    let promise = new Promise(function(resolve, reject) {
         fs.readdir(p, function(err, filenames){
             if (err) 
                 reject(err); 
@@ -27,6 +27,9 @@ async function test1(){
                 resolve(filenames);
         });
     });
+    let result = await promise; 
+    console.log(result); 
+    return result
   };
 
   try{
@@ -48,8 +51,6 @@ async function test1(){
     for (let i = 0; i < paths.length; i++) {
       console.log(i+" : " +paths[i]) 
       function2(paths[i])
-        .then((files) => console.log(files))
-        .catch((error) => console.log(error));
       //console.log(fs.readdirSync(paths[i]))
     }
 
