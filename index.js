@@ -14,7 +14,12 @@ async function test3(){
   console.log(context.payload.issue.number)
   body = context.payload.issue.body
   idx = body.indexOf("ZREQ")
-  console.log(body+ " " + idx)
+  if (idx < 0 ) {
+      core.setFailed('No link(to jira) found.');
+      return;
+  }
+  idx2 = body.indexOf("\n", idx)
+  console.log(body+ " " + idx+ " " + idx2)
   
   
 }
