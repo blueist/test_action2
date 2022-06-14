@@ -3,6 +3,29 @@ const fs = require('fs').promises;
 const path = require('path');
 const github = require('@actions/github');
 
+
+async function test3(){
+  const context = github.context;
+  if (context.payload.issue == null) {
+      core.setFailed('No issue found.');
+      return;
+  }
+  
+  console.log(context.payload.issue.number)
+  console.log(context.payload.issue.body)
+  
+  
+}
+// test1();
+test3()
+
+
+
+
+
+
+
+
 async function test2(){
   const context = github.context;
   if (context.payload.issue == null) {
@@ -50,17 +73,6 @@ fetch('https://my-atlassian-site-009117.atlassian.net/rest/api/3/issue/ZF-29/com
   .then(text => console.log(text))
   .catch(err => console.error(err));  
 }
-// test1();
-test2()
-
-
-
-
-
-
-
-
-
 
 
 
