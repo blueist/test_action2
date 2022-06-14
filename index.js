@@ -5,8 +5,8 @@ const github = require('@actions/github');
 
 const targetProject = "ZF" 
 //const targetProject = "ZREQ"
-const auth = 'bmkim@zinnotech.com:wMlye1tiVPz2y8DJgeZb5E33'
-//const auth = 'bmkim@zinnotech.com:wWD5bmMAZeSJw90oQ3PV9319'
+//const auth = 'bmkim@zinnotech.com:wMlye1tiVPz2y8DJgeZb5E33'
+const auth = 'bmkim@zinnotech.com:wWD5bmMAZeSJw90oQ3PV9319'
 
 
 function getLinkToJira(){
