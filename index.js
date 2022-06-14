@@ -3,8 +3,71 @@ const fs = require('fs').promises;
 const path = require('path');
 const github = require('@actions/github');
 
-async function test1(){
+async function test2(){
+  const context = github.context;
+  if (context.payload.issue == null) {
+      core.setFailed('No issue found.');
+      return;
+  }
+  
+  console.log(context.payload.issue.number)
+  console.log(context.payload.issue.body)
+  
+// This code sample uses the 'node-fetch' library:
+// https://www.npmjs.com/package/node-fetch
+const fetch = require('node-fetch');
 
+const bodyData = `{
+  "visibility": {
+    "identifier": "Administrators",
+    "type": "role",
+    "value": "Administrators"
+  },
+  "body": {
+    "type": "doc",
+    "version": 1,
+    "content": [
+      { "type": "paragraph",
+        "content": [ { "text": "test reply", "type": "text"} ]}
+    ]
+  }
+}`;
+
+fetch('https://my-atlassian-site-009117.atlassian.net/rest/api/3/issue/ZF-29/comment', {
+  method: 'POST',
+  headers: {
+    'Authorization': `Basic ${Buffer.from(
+      'email@example.com:wWD5bmMAZeSJw90oQ3PV9319'
+    ).toString('base64')}`,
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: bodyData
+})
+  .then(response => {
+    console.log(
+      `Response: ${response.status} ${response.statusText}`
+    );
+    return response.text();
+  })
+  .then(text => console.log(text))
+  .catch(err => console.error(err));  
+}
+// test1();
+test2()
+
+
+
+
+
+
+
+
+
+
+
+
+async function test1(){
 
   const function1 = function (err, files) {
     //handling error
@@ -61,55 +124,3 @@ async function test1(){
     core.setFailed(error.message);
   }
 }
-
-async function test2(){
-  const context = github.context;
-  if (context.payload.issue == null) {
-      core.setFailed('No issue found.');
-      return;
-  }
-  
-  console.log(context.payload.issue.number)
-  console.log(context.payload.issue.body)
-  
-  var Client = require('node-rest-client').Client;
-  client = new Client();
-// Provide user credentials, which will be used to log in to Jira.
-var loginArgs = {
-    data: {
-        "username": "admin",
-        "password": "admin"
-    },
-    headers: {
-        "Content-Type": "application/json"
-    }
-};
-client.post("http://localhost:8090/jira/rest/auth/1/session", loginArgs, function(data, response) {
-    if (response.statusCode == 200) {
-        console.log('succesfully logged in, session:', data.session);
-        var session = data.session;
-        // Get the session information and store it in a cookie in the header
-        var searchArgs = {
-            headers: {
-                // Set the cookie from the session information
-                cookie: session.name + '=' + session.value,
-                "Content-Type": "application/json"
-            },
-            data: {
-                // Provide additional data for the Jira search. You can modify the JQL to search for whatever you want.
-                jql: "type=Bug AND status=Closed"
-            }
-        };
-        // Make the request return the search results, passing the header information including the cookie.
-        client.post("http://localhost:8090/jira/rest/api/2/search", searchArgs, function(searchResult, response) {
-            console.log('status code:', response.statusCode);
-            console.log('search result:', searchResult);
-        });
-    } else {
-        throw "Login failed :(";
-    }
-});  
-  
-}
-// test1();
-test2()
