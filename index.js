@@ -3,6 +3,11 @@ const fs = require('fs').promises;
 const path = require('path');
 const github = require('@actions/github');
 
+const targetProject = "ZF" 
+//const targetProject = "ZREQ"
+const auth = 'bmkim@zinnotech.com:wMlye1tiVPz2y8DJgeZb5E33'
+//const auth = 'bmkim@zinnotech.com:wWD5bmMAZeSJw90oQ3PV9319'
+
 
 function getLinkToJira(){
   const context = github.context;
@@ -13,7 +18,7 @@ function getLinkToJira(){
   
   console.log("issue number is "+context.payload.issue.number)
   body = context.payload.issue.body
-  s_idx = body.indexOf("ZREQ")
+  s_idx = body.indexOf("ZF")
   if (s_idx < 0 ) {
       core.setFailed('No link(to jira) found.');
       return;
@@ -51,7 +56,7 @@ async function replyToJira(linkto){
   method: 'POST',
   headers: {
     'Authorization': `Basic ${Buffer.from(
-      'bmkim@zinnotech.com:wMlye1tiVPz2y8DJgeZb5E33'
+      auth
     ).toString('base64')}`,
     'Accept': 'application/json',
     'Content-Type': 'application/json'
@@ -69,7 +74,9 @@ async function replyToJira(linkto){
 }
 
 linkto = getLinkToJira()
-replyToJira(linkto)
+if (linkto != null) {
+  replyToJira(linkto)
+}  
 
 
 async function test1(){
