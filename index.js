@@ -23,7 +23,7 @@ async function test3(){
       core.setFailed('invalid link(to jira) found.');
       return;
   }
-  linkto = body.substring(s_idx, e_idx)
+  linkto = body.substring(s_idx, e_idx-1)
   console.log(body+ " " + s_idx+ " " + e_idx+ " #" + linkto+"#")
   
   
