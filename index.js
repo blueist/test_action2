@@ -13,13 +13,18 @@ async function test3(){
   
   console.log(context.payload.issue.number)
   body = context.payload.issue.body
-  idx = body.indexOf("ZREQ")
-  if (idx < 0 ) {
+  s_idx = body.indexOf("ZREQ")
+  if (s_idx < 0 ) {
       core.setFailed('No link(to jira) found.');
       return;
   }
-  idx2 = body.indexOf("\n", idx)
-  console.log(body+ " " + idx+ " " + idx2)
+  e_idx = body.indexOf("\n", s_idx)
+  if (e_idx < 0 ) {
+      core.setFailed('invalid link(to jira) found.');
+      return;
+  }
+  linkto = body.substring(s_idx, e_idx)
+  console.log(body+ " " + idx+ " " + idx2+ " #" + linkto+"#")
   
   
 }
