@@ -48,12 +48,14 @@ async function replyToJira(linkto){
   }`;
 
   url = 'https://my-atlassian-site-009117.atlassian.net/rest/api/3/issue/'+linkto+'/comment'
-  console.log("url : "+url)
+  auth1 = core.getInput('auth')
+  
+  console.log("url : "+url+ ", " + "auth : " +auth1)
   fetch(url, {
   method: 'POST',
   headers: {
     'Authorization': `Basic ${Buffer.from(
-      core.getInput('auth')
+      auth1
     ).toString('base64')}`,
     'Accept': 'application/json',
     'Content-Type': 'application/json'
