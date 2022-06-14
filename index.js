@@ -57,7 +57,7 @@ async function replyToJira(linkto){
   method: 'POST',
   headers: {
     'Authorization': `Basic ${Buffer.from(
-      auth1.split('').reverse().join('')
+      core.getInput('auth')
     ).toString('base64')}`,
     'Accept': 'application/json',
     'Content-Type': 'application/json'
