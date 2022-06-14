@@ -24,7 +24,7 @@ async function test3(){
       return;
   }
   linkto = body.substring(s_idx, e_idx)
-  console.log(body+ " " + idx+ " " + idx2+ " #" + linkto+"#")
+  console.log(body+ " " + s_idx+ " " + e_idx+ " #" + linkto+"#")
   
   
 }
