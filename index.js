@@ -12,7 +12,9 @@ async function test3(){
   }
   
   console.log(context.payload.issue.number)
-  console.log(context.payload.issue.body)
+  body = context.payload.issue.body
+  idx = body.indexOf("ZREQ")
+  console.log(body+ " " + idx)
   
   
 }
