@@ -20,11 +20,6 @@ const fetchP = import('node-fetch').then(mod => mod.default)
 const fetch = (...args) => fetchP.then(fn => fn(...args))
 
 const bodyData = `{
-  "visibility": {
-    "identifier": "Administrators",
-    "type": "role",
-    "value": "Administrators"
-  },
   "body": {
     "type": "doc",
     "version": 1,
