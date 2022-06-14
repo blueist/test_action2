@@ -15,7 +15,9 @@ async function test2(){
   
 // This code sample uses the 'node-fetch' library:
 // https://www.npmjs.com/package/node-fetch
-const fetch = require('node-fetch');
+//const fetch = require('node-fetch');
+const fetchP = import('node-fetch').then(mod => mod.default)
+const fetch = (...args) => fetchP.then(fn => fn(...args))
 
 const bodyData = `{
   "visibility": {
