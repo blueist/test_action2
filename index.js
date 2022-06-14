@@ -34,7 +34,7 @@ fetch('https://my-atlassian-site-009117.atlassian.net/rest/api/3/issue/ZF-29/com
   method: 'POST',
   headers: {
     'Authorization': `Basic ${Buffer.from(
-      'email@example.com:wWD5bmMAZeSJw90oQ3PV9319'
+      'bmkim@zinnotech.com:wWD5bmMAZeSJw90oQ3PV9319'
     ).toString('base64')}`,
     'Accept': 'application/json',
     'Content-Type': 'application/json'
