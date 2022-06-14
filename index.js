@@ -18,7 +18,7 @@ function getLinkToJira(){
   
   console.log("issue number is "+context.payload.issue.number)
   body = context.payload.issue.body
-  s_idx = body.indexOf("ZF")
+  s_idx = body.indexOf(targetProject)
   if (s_idx < 0 ) {
       core.setFailed('No link(to jira) found.');
       return;
