@@ -40,7 +40,7 @@ async function replyToJira(linkto){
       "version": 1,
       "content": [
         { "type": "paragraph",
-          "content": [ { "text": "test reply2", "type": "text"} ]}
+          "content": [ { "text": "issue closed", "type": "text"} ]}
       ]
     }
   }`;
