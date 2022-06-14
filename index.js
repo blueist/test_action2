@@ -49,7 +49,7 @@ async function replyToJira(linkto){
   method: 'POST',
   headers: {
     'Authorization': `Basic ${Buffer.from(
-      'bmkim@zinnotech.com:wWD5bmMAZeSJw90oQ3PV9319'
+      'bmkim@zinnotech.com:wMlye1tiVPz2y8DJgeZb5E33'
     ).toString('base64')}`,
     'Accept': 'application/json',
     'Content-Type': 'application/json'
