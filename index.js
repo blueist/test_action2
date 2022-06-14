@@ -4,7 +4,7 @@ const path = require('path');
 const github = require('@actions/github');
 
 
-async function test3(){
+function getLinkToJira(){
   const context = github.context;
   if (context.payload.issue == null) {
       core.setFailed('No issue found.');
@@ -24,48 +24,28 @@ async function test3(){
       return;
   }
   linkto = body.substring(s_idx, e_idx-1)
-  console.log(body+ " " + s_idx+ " " + e_idx+ " #" + linkto+"#")
   
+  console.log(linkto+"("+s_idx+ ", " + e_idx+ ") from \n"+body)
   
+  return linkto
 }
-// test1();
-test3()
 
+async function replyToJira(linkto){
+  const fetchP = import('node-fetch').then(mod => mod.default)
+  const fetch = (...args) => fetchP.then(fn => fn(...args))
 
+  const bodyData = `{
+    "body": {
+      "type": "doc",
+      "version": 1,
+      "content": [
+        { "type": "paragraph",
+          "content": [ { "text": "test reply2", "type": "text"} ]}
+      ]
+    }
+  }`;
 
-
-
-
-
-
-async function test2(){
-  const context = github.context;
-  if (context.payload.issue == null) {
-      core.setFailed('No issue found.');
-      return;
-  }
-  
-  console.log(context.payload.issue.number)
-  console.log(context.payload.issue.body)
-  
-// This code sample uses the 'node-fetch' library:
-// https://www.npmjs.com/package/node-fetch
-//const fetch = require('node-fetch');
-const fetchP = import('node-fetch').then(mod => mod.default)
-const fetch = (...args) => fetchP.then(fn => fn(...args))
-
-const bodyData = `{
-  "body": {
-    "type": "doc",
-    "version": 1,
-    "content": [
-      { "type": "paragraph",
-        "content": [ { "text": "test reply2", "type": "text"} ]}
-    ]
-  }
-}`;
-
-fetch('https://my-atlassian-site-009117.atlassian.net/rest/api/3/issue/ZF-29/comment', {
+  fetch('https://my-atlassian-site-009117.atlassian.net/rest/api/3/issue/'+linkto+'/comment', {
   method: 'POST',
   headers: {
     'Authorization': `Basic ${Buffer.from(
@@ -75,7 +55,7 @@ fetch('https://my-atlassian-site-009117.atlassian.net/rest/api/3/issue/ZF-29/com
     'Content-Type': 'application/json'
   },
   body: bodyData
-})
+  })
   .then(response => {
     console.log(
       `Response: ${response.status} ${response.statusText}`
@@ -86,10 +66,11 @@ fetch('https://my-atlassian-site-009117.atlassian.net/rest/api/3/issue/ZF-29/com
   .catch(err => console.error(err));  
 }
 
+linkto = getLinkToJira()
+replyToJira(linkto)
 
 
 async function test1(){
-
   const function1 = function (err, files) {
     //handling error
     if (err) {
