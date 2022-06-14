@@ -11,7 +11,7 @@ function getLinkToJira(){
       return;
   }
   
-  console.log(context.payload.issue.number)
+  console.log("issue number is "+context.payload.issue.number)
   body = context.payload.issue.body
   s_idx = body.indexOf("ZREQ")
   if (s_idx < 0 ) {
@@ -45,7 +45,9 @@ async function replyToJira(linkto){
     }
   }`;
 
-  fetch('https://my-atlassian-site-009117.atlassian.net/rest/api/3/issue/'+linkto+'/comment', {
+  url = 'https://my-atlassian-site-009117.atlassian.net/rest/api/3/issue/'+linkto+'/comment'
+  console.log("url : "+url)
+  fetch(url, {
   method: 'POST',
   headers: {
     'Authorization': `Basic ${Buffer.from(
