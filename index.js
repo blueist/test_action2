@@ -1,6 +1,7 @@
 const core = require('@actions/core');
 const fs = require('fs').promises;
 const path = require('path');
+const github = require('@actions/github');
 
 async function test1(){
 
@@ -60,5 +61,17 @@ async function test1(){
     core.setFailed(error.message);
   }
 }
- 
-test1();
+
+async function test2(){
+  const context = github.context;
+  if (context.payload.issue == null) {
+      core.setFailed('No issue found.');
+      return;
+  }
+  
+  console.log(context.payload.issue.number)
+  console.log(context.payload.issue.body)
+  
+}
+// test1();
+test2()
