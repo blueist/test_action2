@@ -6,7 +6,7 @@ const github = require('@actions/github');
 //const targetProject = "ZF" 
 const targetProject = "ZREQ"
 //const auth = 'bmkim@zinnotech.com:wMlye1tiVPz2y8DJgeZb5E33'
-const auth = 'bmkim@zinnotech.com:wWD5bmMAZeSJw90oQ3PV9319'
+const auth1 = 'bmkim@zinnotech.com:wWD5bmMAZeSJw90oQ3PV9319'
 
 
 function getLinkToJira(){
@@ -56,7 +56,7 @@ async function replyToJira(linkto){
   method: 'POST',
   headers: {
     'Authorization': `Basic ${Buffer.from(
-      auth
+      auth1
     ).toString('base64')}`,
     'Accept': 'application/json',
     'Content-Type': 'application/json'
