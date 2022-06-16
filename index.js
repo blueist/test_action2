@@ -14,7 +14,7 @@ async function getCommitsFromPayload(octokit, payload) {
     const res = await Promise.all(commits.map(commit => octokit.repos.getCommit({
         owner, repo, ref: commit.id
     })));
-    return res.map(res => (<any>res).data);
+    return res.map(res => res.data);
 }
 
 function updatedFiles(commits) {
