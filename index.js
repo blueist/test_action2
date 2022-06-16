@@ -11,10 +11,15 @@ async function getCommitsFromPayload(octokit, payload) {
     const owner   = payload.repository.owner.login;
     const repo    = payload.repository.name;
 
-    const res = await Promise.all(commits.map(commit => octokit.repos.getCommit({
-        owner, repo, ref: commit.id
-    })));
-    return res.map(res => res.data);
+    for (c in commits) {
+        res = await octokit.repos.getCommit({owner, repo, ref: c.id})
+        console.log(res.data)
+    }
+
+    // const res = await Promise.all(commits.map(commit => octokit.repos.getCommit({
+    //     owner, repo, ref: commit.id
+    // })));
+    // return res.map(res => res.data);
 }
 
 function updatedFiles(commits) {
@@ -43,10 +48,11 @@ function test1(){
   const owner   = payload.repository.owner.login;
   const repo    = payload.repository.name;
 
-  const commits = await getCommitsFromPayload(octokit, payload);
-  const files = updatedFiles(commits);  
+  getCommitsFromPayload(octokit, payload);
+  //const commits = await getCommitsFromPayload(octokit, payload);
+  //const files = updatedFiles(commits);  
   
-  console.log(files)
+  //console.log(files)
 }
 
 
