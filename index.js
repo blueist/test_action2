@@ -18,12 +18,15 @@ async function getCommitsFromPayload(octokit, payload) {
 }
 
 function updatedFiles(commits) {
-    return uniq(commits.reduce(
-        (accum: any[], commit) => accum.concat(
-            commit.files.filter(f => f.status !== 'removed').map(f => f.filename)
-        ),
-        []
-    ));
+    data = []
+    for c in commits {
+        for(f in commit.files) {
+            if(f.status !== 'removed'){
+                data.push(f.filename)
+            }
+        }
+    }
+    return data
 }
 
 const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
