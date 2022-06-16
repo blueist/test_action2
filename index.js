@@ -8,7 +8,7 @@ const targetProject = "ZREQ"
 
 function test1(){
   const context = github.context;
-  console.log("context "+context)
+  console.log("context "+JSON.stringify(context))
 
 }
 
