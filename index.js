@@ -19,8 +19,8 @@ async function getCommitsFromPayload(octokit, payload) {
 
 function updatedFiles(commits) {
     data = []
-    for c in commits {
-        for(f in commit.files) {
+    for (c in commits) {
+        for(f in c.files) {
             if(f.status !== 'removed'){
                 data.push(f.filename)
             }
