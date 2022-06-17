@@ -56,5 +56,6 @@ function test1(){
   //console.log(files)
 }
 
-
-test1()
+const input = core.getInput('input')
+console.log(input)
+//test1()
