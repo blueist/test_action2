@@ -6,6 +6,7 @@ const github = require('@actions/github');
 //const targetProject = "ZF" 
 const targetProject = "ZREQ"
 
+
 async function getCommitsFromPayload(octokit, payload) {
     const commits = payload.commits;
     const owner   = payload.repository.owner.login;
