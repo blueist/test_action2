@@ -7,35 +7,7 @@ const github = require('@actions/github');
 const targetProject = "ZREQ"
 
 
-async function getCommitsFromPayload(octokit, payload) {
-    const commits = payload.commits;
-    const owner   = payload.repository.owner.login;
-    const repo    = payload.repository.name;
 
-    for (c in commits) {
-        res = await octokit.repos.getCommit({owner, repo, ref: c.id})
-        console.log(res.data)
-    }
-
-    // const res = await Promise.all(commits.map(commit => octokit.repos.getCommit({
-    //     owner, repo, ref: commit.id
-    // })));
-    // return res.map(res => res.data);
-}
-
-function updatedFiles(commits) {
-    data = []
-    for (c in commits) {
-        for(f in c.files) {
-            if(f.status !== 'removed'){
-                data.push(f.filename)
-            }
-        }
-    }
-    return data
-}
-
-const octokit = new GitHub(process.env.GITHUB_TOKEN);
 
 function test1(){
   const context = github.context;
@@ -48,12 +20,6 @@ function test1(){
   }
   const owner   = payload.repository.owner.login;
   const repo    = payload.repository.name;
-
-  getCommitsFromPayload(octokit, payload);
-  //const commits = await getCommitsFromPayload(octokit, payload);
-  //const files = updatedFiles(commits);  
-  
-  //console.log(files)
 }
 
 const input = core.getInput('input')
