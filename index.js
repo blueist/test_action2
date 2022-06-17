@@ -34,7 +34,7 @@ function updatedFiles(commits) {
     return data
 }
 
-const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
+const octokit = new GitHub(process.env.GITHUB_TOKEN);
 
 function test1(){
   const context = github.context;
