@@ -27,7 +27,7 @@ function test1(){
       if(dfn== null || dfn.length < 1){
         continue
       }
-      dfn = dfn[0].replace(/::/, '')
+      dfn = dfn[0].replace(/::/g, '')
       console.log(dfn)      
     }
     
