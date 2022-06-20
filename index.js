@@ -19,12 +19,13 @@ function test1(){
     //console.log(data);
     //var result = data.replace(/blueist/g, 'stillblueist');
     mcrs = data.match(/(```zinno-macro::)[^(```)]+(```)/g)
+    console.log(mcrs)
     for (m in mcrs) {
       if(m.length < 1){
         continue
       }
       dfn = /(::)[^(::)]+(::)/.exec(m[0])
-      if(dfn.length < 1){
+      if(dfn== null || dfn.length < 1){
         continue
       }
       dfn = dfn[0].replace(/::/, '')
