@@ -20,15 +20,17 @@ function test1(){
     //var result = data.replace(/blueist/g, 'stillblueist');
     mcrs = data.match(/(```zinno-macro::)[^(```)]+(```)/g)
     console.log(mcrs+ " " + mcrs.length)
-    for (var mcr in mcrs) {
+    mcrs.forEach(function(item) {
       dfn = /(::)[^(::)]+(::)/.exec(mcr)
       console.log(dfn+ " " + mcr)
       if(dfn== null || dfn.length < 1){
         continue
       }
       dfn = dfn[0].replace(/::/, '')
-      console.log(dfn)
-    }
+      console.log(dfn)      
+    } );
+    
+   
     fs.writeFile(input, data, 'utf8', function (err) {
       if (err) {
         return console.log(err);
