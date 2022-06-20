@@ -21,15 +21,16 @@ function test1(){
     console.log(mcrs+ " " + mcrs.length)
     for(i =0;i<mcrs.length;i++){
       mcr = mcrs[i]
-      dfn = /(::)[^(::)]+(::)/.exec(mcr)
-      console.log(dfn+ " " + mcr)
-      if(dfn== null || dfn.length < 1){
+      mcrDef = /(::)[^(::)]+(::)/.exec(mcr)
+
+      if(mcrDef == null || mcrDef.length < 1){
         continue
       }
       
-      dfn = dfn[0].replace(/::/g, '')
-      console.log(dfn)   
-      console.log(mcr.substring(dfn[0].length + 3 + 11, mcr.length-3))
+      mcrSpec = mcrDef[0].replace(/::/g, '')
+      console.log(mcrSpec)   
+      console.log(mcrDef+ " " + mcr)      
+      console.log(mcr.substring(mcrDef[0].length + 3 + 11, mcr.length-3))
     }
     
    
