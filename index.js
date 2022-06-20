@@ -7,7 +7,7 @@ const github = require('@actions/github');
 const targetProject = "ZREQ"
 
 
-
+var macros = {}
 
 function test1(){
   const input = core.getInput('input')
@@ -18,7 +18,18 @@ function test1(){
     }
     //console.log(data);
     //var result = data.replace(/blueist/g, 'stillblueist');
-    t = data.match(/(```zinno-macro::)[^(```)]+(```)/g)
+    mcrs = data.match(/(```zinno-macro::)[^(```)]+(```)/g)
+    for (m in mcrs) {
+      if(m.length < 1){
+        continue
+      }
+      dfn = /(::)[^(::)]+(::)/.exec(m[0])
+      if(dfn.length < 1){
+        continue
+      }
+      dfn = dfn[0].replace(/::/, '')
+      console.log(dfn)
+    }
     console.log(t)
     fs.writeFile(input, data, 'utf8', function (err) {
       if (err) {
