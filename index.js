@@ -18,7 +18,7 @@ function test1(){
     }
     var result = data.replace('blueist', 'stillblueist');
 
-    fs.writeFile(someFile, result, 'utf8', function (err) {
+    fs.writeFile(input, result, 'utf8', function (err) {
       if (err) {
         return console.log(err);
       }
