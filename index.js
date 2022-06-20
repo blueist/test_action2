@@ -28,7 +28,7 @@ function test1(){
       }
       dfn = dfn[0].replace(/::/, '')
       console.log(dfn)      
-    } );
+    }
     
    
     fs.writeFile(input, data, 'utf8', function (err) {
