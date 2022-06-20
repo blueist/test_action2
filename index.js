@@ -22,7 +22,7 @@ function test1(){
       if (err) {
         return console.log(err);
       }
-    );
+    });
   });
 //   const context = github.context;
 //   console.log("context "+JSON.stringify(context))
