@@ -21,8 +21,8 @@ function test1(){
     mcrs = data.match(/(```zinno-macro::)[^(```)]+(```)/g)
     console.log(mcrs)
     for (var mcr in mcrs) {
-      dfn = /(::)[^(::)]+(::)/.exec(m)
-      console.log(dfn+ " " + m)
+      dfn = /(::)[^(::)]+(::)/.exec(mcr)
+      console.log(dfn+ " " + mcr)
       if(dfn== null || dfn.length < 1){
         continue
       }
