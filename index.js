@@ -25,13 +25,13 @@ function test1(){
         continue
       }
       dfn = /(::)[^(::)]+(::)/.exec(m[0])
+      console.log(dfn+ " " + m[0])
       if(dfn== null || dfn.length < 1){
         continue
       }
       dfn = dfn[0].replace(/::/, '')
       console.log(dfn)
     }
-    console.log(t)
     fs.writeFile(input, data, 'utf8', function (err) {
       if (err) {
         return console.log(err);
