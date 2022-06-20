@@ -8,7 +8,6 @@ const targetProject = "ZREQ"
 
 
 var macros = {}
-
 function test1(){
   const input = core.getInput('input')
   console.log(input)
@@ -27,8 +26,10 @@ function test1(){
       if(dfn== null || dfn.length < 1){
         continue
       }
+      
       dfn = dfn[0].replace(/::/g, '')
-      console.log(dfn)      
+      console.log(dfn)   
+      console.log(mcr.substring(dfn[0].length + 3 + 11, mcr.length-3))
     }
     
    
