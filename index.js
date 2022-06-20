@@ -16,7 +16,7 @@ function test1(){
     if (err) {
       return console.log(err);
     }
-    var result = data.replace(/blueist/g, 'stillblueist');
+    //var result = data.replace(/blueist/g, 'stillblueist');
     t = data.match(/(```)[^(```)]+(```)/g)
     console.log(t)
     fs.writeFile(input, result, 'utf8', function (err) {
