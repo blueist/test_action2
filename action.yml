@@ -4,9 +4,9 @@ inputs:
   input:
     description: 'input directory'
     required: true
-  output:
-    description: 'output directory'
-    required: true
+outputs:
+  changed: 
+    description: 'true is there is any change'
 runs:
   using: 'node12'
   main: 'index.js'
