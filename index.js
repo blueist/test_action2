@@ -20,7 +20,7 @@ function test1(){
     //var result = data.replace(/blueist/g, 'stillblueist');
     mcrs = data.match(/(```zinno-macro::)[^(```)]+(```)/g)
     console.log(mcrs+ " " + mcrs.length)
-    mcrs.forEach(function(item) {
+    for(i =0;i<mcrs.length;i++){
       dfn = /(::)[^(::)]+(::)/.exec(mcr)
       console.log(dfn+ " " + mcr)
       if(dfn== null || dfn.length < 1){
