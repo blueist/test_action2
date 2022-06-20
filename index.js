@@ -18,7 +18,7 @@ function test1(){
     }
     //console.log(data);
     //var result = data.replace(/blueist/g, 'stillblueist');
-    t = data.match(/(```)[^(```)]+(```)/g)
+    t = data.match(/(```zinno-macro::)[^(```)]+(```)/g)
     console.log(t)
     fs.writeFile(input, data, 'utf8', function (err) {
       if (err) {
