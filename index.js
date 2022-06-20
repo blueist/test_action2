@@ -16,7 +16,7 @@ function test1(){
     if (err) {
       return console.log(err);
     }
-    console.log(data);
+    //console.log(data);
     //var result = data.replace(/blueist/g, 'stillblueist');
     t = data.match(/(```)[^(```)]+(```)/g)
     console.log(t)
