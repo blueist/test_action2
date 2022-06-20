@@ -26,6 +26,7 @@ function test1(){
       }
     });
   });
+core.setOutput("changed", 'true');
 //   const context = github.context;
 //   console.log("context "+JSON.stringify(context))
 
