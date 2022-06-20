@@ -12,8 +12,17 @@ const targetProject = "ZREQ"
 function test1(){
   const input = core.getInput('input')
   console.log(input)
-  fs.readFile(input, 'utf-8', function(err, data){
-    console.log(data);            // sample.txt의 내용 출력
+  fs.readFile(input, 'utf8', function (err,data) {
+    if (err) {
+      return console.log(err);
+    }
+    var result = data.replace('blueist', 'stillblueist');
+
+    fs.writeFile(someFile, result, 'utf8', function (err) {
+      if (err) {
+        return console.log(err);
+      }
+    );
   });
 //   const context = github.context;
 //   console.log("context "+JSON.stringify(context))
