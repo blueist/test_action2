@@ -56,8 +56,10 @@ function test1(){
       console.log("***")   
       console.log(mcrBody)
       console.log("***")   
+      
+      macros['mcrName'] = {'params':mcrParams, 'body':mcrBody}
     }
-    
+    console.log(macros)
    
     fs.writeFile(input, data, 'utf8', function (err) {
       if (err) {
