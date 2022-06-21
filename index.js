@@ -25,7 +25,7 @@ function test1(){
     
     //console.log(data);
     //var result = data.replace(/blueist/g, 'stillblueist');
-    reStr = "("+mPrefix")[^("+mDelimeter+")]+("+mDelimeter+")"
+    reStr = "("+mPrefix+")[^("+mDelimeter+")]+("+mDelimeter+")"
     re = new RegExp(, 'g')
     mcrs = data.match(re)
     console.log(mcrs+ " " + mcrs.length)
