@@ -6,7 +6,10 @@ const github = require('@actions/github');
 //const targetProject = "ZF" 
 const targetProject = "ZREQ"
 
-const mPrefix = '```zinno-macro::'
+const mMarker = '```'
+const mDelimeter = '```'
+const mPrefix = mMarker+'zinno-macro'+mDelimeter
+const mPostfix = mMarker
 
 var macros = {}
 
@@ -22,7 +25,8 @@ function test1(){
     
     //console.log(data);
     //var result = data.replace(/blueist/g, 'stillblueist');
-    re = new RegExp("(```zinno-macro::)[^(```)]+(```)", 'g')
+    reStr = "("+mPrefix")[^("+mDelimeter+")]+("+mDelimeter+")"
+    re = new RegExp(, 'g')
     mcrs = data.match(re)
     console.log(mcrs+ " " + mcrs.length)
     for(i =0;i<mcrs.length;i++){
