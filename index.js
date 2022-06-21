@@ -40,9 +40,22 @@ function test1(){
         continue
       }
       mcrSpec = mcrDef[0].replace(reMacroSpliter, '')
-      console.log(mcrSpec)   
-      console.log(mcrDef+ " " + mcr)      
-      console.log(mcr.substring(mPrefix.length+mcrSpec.length+mSpliter.length, mcr.length-3))
+      mcrSpec = mcrSpec.split(',')
+      if ( mcrSpec.length == 0){
+        return
+      }
+      mcrName = mcrSpec[0]
+      mcrParams = mcrSpec.slice(1)
+      mcrBody = mcr.substring(mPrefix.length+mcrSpec.length+mSpliter.length, mcr.length-3)
+      console.log("***")   
+      console.log(mcr)   
+      console.log("***")   
+      console.log(mcrName)
+      console.log("***")   
+      console.log(mcrParams)
+      console.log("***")   
+      console.log(mcrBody)
+      console.log("***")   
     }
     
    
