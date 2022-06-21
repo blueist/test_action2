@@ -28,10 +28,12 @@ function test1(){
                                     
   fs.readFile(input, 'utf8', function (err,data) {
     if (err) {
+      core.setOutput("changed", 'false');
       return console.log(err);
     }
     macros = data.match(reMacroFinder)
     if (macros == null || macros.length == 0){
+      core.setOutput("changed", 'false');
       return
     }
     console.log(macros+ " " + macros.length)
@@ -49,27 +51,33 @@ function test1(){
       mcrName = mcrSpecTemp[0]
       mcrParams = mcrSpecTemp.slice(1)
       mcrBody = mcr.substring(mPrefix.length+mcrSpec.length+mSpliter.length, mcr.length-3)  
-      macros['mcrName'] = {'params':mcrParams, 'body':mcrBody}
+      macros['mcrName'] = {'params':mcrParams, 'body':mcrBody, 'func':new Function(mcrParams, mcrBody)}
     }
     console.log(macros)
    
     macroCalls = data.match(reMacroCallFinder)
     if (macroCalls == null || macroCalls.length == 0){
+      core.setOutput("changed", 'false');
       return
     }
+    
+    var changes = 0
     console.log(macroCalls+ " " + macroCalls.length)
     for(i =0;i<macroCalls.length;i++){
-      mc = macroCalls[i]
+      mc = macroCalls[i] // macro call 
+      mc = mc.replace(mcCallPrefix, '').replace(mcCallPostfix, '')
       console.log(mc)
     }
     
-    fs.writeFile(input, data, 'utf8', function (err) {
-      if (err) {
-        return console.log(err);
-      }
-    });
+    if(changes > 0) {
+      fs.writeFile(input, data, 'utf8', function (err) {
+        if (err) {
+          return console.log(err);
+        }
+      });
+    }
   });
-core.setOutput("changed", 'true');
+
 //   const context = github.context;
 //   console.log("context "+JSON.stringify(context))
 
