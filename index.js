@@ -10,6 +10,8 @@ const mMarker = '```'
 const mDelimeter = '```'
 const mPrefix = mMarker+'zinno-macro'+mDelimeter
 const mPostfix = mMarker
+const mSpliter = '::'
+
 
 var macros = {}
 
@@ -18,6 +20,10 @@ var macros = {}
 function test1(){
   const input = core.getInput('input')
   console.log(input)
+  const reMacroFinder = new RegExp("("+mPrefix+")[^("+mDelimeter+")]+("+mDelimeter+")", 'g')
+  const reMacroDefiner = new RegExp("("+mSpliter+")[^("+mSpliter+")]+("+mSpliter+")")
+  const reMacroSpliter = new RegExp(mSpliter, 'g')
+                                    
   fs.readFile(input, 'utf8', function (err,data) {
     if (err) {
       return console.log(err);
@@ -25,19 +31,17 @@ function test1(){
     
     //console.log(data);
     //var result = data.replace(/blueist/g, 'stillblueist');
-    reStr = "("+mPrefix+")[^("+mDelimeter+")]+("+mDelimeter+")"
-    re = new RegExp(, 'g')
-    mcrs = data.match(re)
+    mcrs = data.match(reMacroFinder)
     console.log(mcrs+ " " + mcrs.length)
     for(i =0;i<mcrs.length;i++){
       mcr = mcrs[i]
-      mcrDef = /(::)[^(::)]+(::)/.exec(mcr)
+      mcrDef = reMacroDefiner.exec(mcr)
 
       if(mcrDef == null || mcrDef.length < 1){
         continue
       }
-      
-      mcrSpec = mcrDef[0].replace(/::/g, '')
+   
+      mcrSpec = mcrDef[0].replace(reMacroSpliter, '')
       console.log(mcrSpec)   
       console.log(mcrDef+ " " + mcr)      
       console.log(mcr.substring(mcrDef[0].length + 3 + 11, mcr.length-3))
