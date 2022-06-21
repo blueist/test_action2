@@ -11,7 +11,8 @@ const mSpliter = '::'
 const mPrefix = mMarker+'zinno-macro'+mSpliter
 const mPostfix = mMarker
 
-
+const mcCallPrefix = mSpliter+'zinno-macro'+mSpliter
+const mcCallPostfix = mSpliter
 
 var macros = {}
 
@@ -23,6 +24,7 @@ function test1(){
   const reMacroFinder = new RegExp("("+mPrefix+")[^("+mMarker+")]+("+mMarker+")", 'g')
   const reMacroDefiner = new RegExp("("+mSpliter+")[^("+mSpliter+")]+("+mSpliter+")")
   const reMacroSpliter = new RegExp(mSpliter, 'g')
+  const reMacroCallFinder = new RegExp("("+mcCallPrefix+")[^("+mSpliter+")]+("+mSpliter+")", 'g')
                                     
   fs.readFile(input, 'utf8', function (err,data) {
     if (err) {
@@ -46,21 +48,21 @@ function test1(){
       }
       mcrName = mcrSpecTemp[0]
       mcrParams = mcrSpecTemp.slice(1)
-      mcrBody = mcr.substring(mPrefix.length+mcrSpec.length+mSpliter.length, mcr.length-3)
-      console.log("***")   
-      console.log(mcr)   
-      console.log("***")   
-      console.log(mcrName)
-      console.log("***")   
-      console.log(mcrParams)
-      console.log("***")   
-      console.log(mcrBody)
-      console.log("***")   
-      
+      mcrBody = mcr.substring(mPrefix.length+mcrSpec.length+mSpliter.length, mcr.length-3)  
       macros['mcrName'] = {'params':mcrParams, 'body':mcrBody}
     }
     console.log(macros)
    
+    macroCalls = data.match(reMacroCallFinder)
+    if (macroCalls == null || macroCalls.length == 0){
+      return
+    }
+    console.log(macroCalls+ " " + macroCalls.length)
+    for(i =0;i<macroCalls.length;i++){
+      mc = macroCalls[i]
+      console.log(mc)
+    }
+    
     fs.writeFile(input, data, 'utf8', function (err) {
       if (err) {
         return console.log(err);
