@@ -93,9 +93,9 @@ function test1(){
     for(i =0;i<macroCalls.length;i++){
       v = callMacro(macroCalls[i])
       if(v != null) {
-        console.log(mc+ " " + v)
+        console.log(macroCalls[i]+ " " + v)
       }
-      
+
     //   mc = macroCalls[i] // macro call 
     //   mc = mc.replace(mcCallPrefix, '').replace(mcCallPostfix, '')
       
@@ -114,7 +114,7 @@ function test1(){
     //     continue
     //   }
     //   v = mSpec['func'].apply(null, mcParams)
-      console.log(mc+ " " + v)
+    //   console.log(mc+ " " + v)
       
     }
     
