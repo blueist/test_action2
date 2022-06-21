@@ -24,13 +24,13 @@ function defineMacro(mcr){
     mcrDef = reMacroDefiner.exec(mcr)
     if(mcrDef == null || mcrDef.length < 1){
         console.log('no macro definition :'+mcr)
-        return null
+        return [null, null]
     }
     mcrSpec = mcrDef[0].replace(reMacroSpliter, '')
     mcrSpecTemp = mcrSpec.split(',')
     if ( mcrSpecTemp.length == 0){
         console.log('no macro spec :'+mcrSpec)
-        return null
+        return [null, null]
     }
     mcrName = mcrSpecTemp[0]
     mcrParams = mcrSpecTemp.slice(1)
@@ -69,7 +69,9 @@ function test1(){
     //   mcrName = mcrSpecTemp[0]
     //   mcrParams = mcrSpecTemp.slice(1)
     //   mcrBody = mcr.substring(mPrefix.length+mcrSpec.length+mSpliter.length, mcr.length-3)  
-      macros[mcrName] = mcrInfo
+      if (mcrName!=null) {
+        macros[mcrName] = mcrInfo
+      }
     }
     console.log(macros)
    
