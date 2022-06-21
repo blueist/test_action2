@@ -7,10 +7,10 @@ const github = require('@actions/github');
 const targetProject = "ZREQ"
 
 const mMarker = '```'
-const mDelimeter = '```'
-const mPrefix = mMarker+'zinno-macro'+mDelimeter
-const mPostfix = mMarker
 const mSpliter = '::'
+const mPrefix = mMarker+'zinno-macro'+mSpliter
+const mPostfix = mMarker
+
 
 
 var macros = {}
@@ -20,7 +20,7 @@ var macros = {}
 function test1(){
   const input = core.getInput('input')
   console.log(input)
-  const reMacroFinder = new RegExp("("+mPrefix+")[^("+mDelimeter+")]+("+mDelimeter+")", 'g')
+  const reMacroFinder = new RegExp("("+mPrefix+")[^("+mMarker+")]+("+mMarker+")", 'g')
   const reMacroDefiner = new RegExp("("+mSpliter+")[^("+mSpliter+")]+("+mSpliter+")")
   const reMacroSpliter = new RegExp(mSpliter, 'g')
                                     
@@ -32,6 +32,9 @@ function test1(){
     //console.log(data);
     //var result = data.replace(/blueist/g, 'stillblueist');
     mcrs = data.match(reMacroFinder)
+    if (mcrs == null){
+      return
+    }
     console.log(mcrs+ " " + mcrs.length)
     for(i =0;i<mcrs.length;i++){
       mcr = mcrs[i]
