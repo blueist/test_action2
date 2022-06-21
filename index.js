@@ -68,7 +68,7 @@ function test1(){
       mc = mc.replace(mcCallPrefix, '').replace(mcCallPostfix, '')
       
       mcTemp = mc.split(',')
-      if ( mcrSpecTemp.length == 0){
+      if ( mcTemp.length == 0){
         continue
       } 
       mcName = mcTemp[0]
