@@ -6,8 +6,12 @@ const github = require('@actions/github');
 //const targetProject = "ZF" 
 const targetProject = "ZREQ"
 
+const mPrefix = '```zinno-macro::'
 
 var macros = {}
+
+
+
 function test1(){
   const input = core.getInput('input')
   console.log(input)
@@ -15,9 +19,11 @@ function test1(){
     if (err) {
       return console.log(err);
     }
+    
     //console.log(data);
     //var result = data.replace(/blueist/g, 'stillblueist');
-    mcrs = data.match(/(```zinno-macro::)[^(```)]+(```)/g)
+    re = new RegExp("(```zinno-macro::)[^(```)]+(```)", 'g')
+    mcrs = data.match(re)
     console.log(mcrs+ " " + mcrs.length)
     for(i =0;i<mcrs.length;i++){
       mcr = mcrs[i]
