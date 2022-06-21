@@ -23,13 +23,13 @@ var macros = {}
 function defineMacro(mcr){
     mcrDef = reMacroDefiner.exec(mcr)
     if(mcrDef == null || mcrDef.length < 1){
-        console.log('no macro definition :'+mcr)
+        console.log('* no macro definition :'+mcr)
         return [null, null]
     }
     mcrSpec = mcrDef[0].replace(reMacroSpliter, '')
     mcrSpecTemp = mcrSpec.split(',')
     if ( mcrSpecTemp.length == 0){
-        console.log('no macro spec :'+mcrSpec)
+        console.log('* no macro spec :'+mcrSpec)
         return [null, null]
     }
     mcrName = mcrSpecTemp[0]
@@ -38,9 +38,30 @@ function defineMacro(mcr){
     return [mcrName, {'params':mcrParams, 'body':mcrBody, 'func':new Function(mcrParams, mcrBody)}]
 }
 
+function callMacro(mc){
+    mc = mc.replace(mcCallPrefix, '').replace(mcCallPostfix, '')
+    mcTemp = mc.split(',')
+    if ( mcTemp.length == 0){
+        console.log('* invalid macro call :'+mc)
+        return null
+    } 
+    mcName = mcTemp[0]
+    mcParams = mcTemp.slice(1)
+    if (!( mcName in macros)) {
+        console.log('no macro definition :'+mcName)
+        return null
+    }
+    mSpec = macros[mcName]
+    if (mcParams.length != mSpec['params'].length){
+        console.log('invalid macro params : needs '+ mSpec['params'].length+  " but get " +  mcParams)
+        return null
+    }
+    return mSpec['func'].apply(null, mcParams)
+}
+
 function test1(){
   const input = core.getInput('input')
-  console.log('read '+input)
+  console.log('* read '+input)
                                     
   fs.readFile(input, 'utf8', function (err,data) {
     if (err) {
@@ -50,58 +71,49 @@ function test1(){
     macros = data.match(reMacroFinder)
     if (macros == null || macros.length == 0){
       core.setOutput("changed", 'false');
-      return console.log('find no macros');
+      return console.log('* find no macros');
     }
-    console.log("find " + macros.length+ " macros" )
+    console.log("* find " + macros.length+ " macros" )
     console.debug(macros)
     for(i =0;i<macros.length;i++){
-      
       [mcrName, mcrInfo] = defineMacro(macros[i])
-    //   mcrDef = reMacroDefiner.exec(mcr)
-    //   if(mcrDef == null || mcrDef.length < 1){
-    //     continue
-    //   }
-    //   mcrSpec = mcrDef[0].replace(reMacroSpliter, '')
-    //   mcrSpecTemp = mcrSpec.split(',')
-    //   if ( mcrSpecTemp.length == 0){
-    //     continue
-    //   }
-    //   mcrName = mcrSpecTemp[0]
-    //   mcrParams = mcrSpecTemp.slice(1)
-    //   mcrBody = mcr.substring(mPrefix.length+mcrSpec.length+mSpliter.length, mcr.length-3)  
       if (mcrName!=null) {
         macros[mcrName] = mcrInfo
       }
     }
-    console.log(macros)
-   
     macroCalls = data.match(reMacroCallFinder)
     if (macroCalls == null || macroCalls.length == 0){
       core.setOutput("changed", 'false');
-      return
+      return console.log('* find no macro calls');
     }
     
+    console.log("* find " + macroCalls.length+ " macro calls" )
+    console.debug(macroCalls)
     var changes = 0
-    console.log(macroCalls+ " " + macroCalls.length)
     for(i =0;i<macroCalls.length;i++){
-      mc = macroCalls[i] // macro call 
-      mc = mc.replace(mcCallPrefix, '').replace(mcCallPostfix, '')
+      v = callMacro(macroCalls[i])
+      if(v != null) {
+        console.log(mc+ " " + v)
+      }
       
-      mcTemp = mc.split(',')
-      if ( mcTemp.length == 0){
-        continue
-      } 
-      mcName = mcTemp[0]
-      mcParams = mcTemp.slice(1)
-      if (!( mcName in macros)) {
-        continue
-      }
-      mSpec = macros[mcName]
-      console.log(mc+ " " + mSpec+ "  "+ mcParams.length+ "  "+ mSpec['params'].length)
-      if (mcParams.length != mSpec['params'].length){
-        continue
-      }
-      v = mSpec['func'].apply(null, mcParams)
+    //   mc = macroCalls[i] // macro call 
+    //   mc = mc.replace(mcCallPrefix, '').replace(mcCallPostfix, '')
+      
+    //   mcTemp = mc.split(',')
+    //   if ( mcTemp.length == 0){
+    //     continue
+    //   } 
+    //   mcName = mcTemp[0]
+    //   mcParams = mcTemp.slice(1)
+    //   if (!( mcName in macros)) {
+    //     continue
+    //   }
+    //   mSpec = macros[mcName]
+    //   console.log(mc+ " " + mSpec+ "  "+ mcParams.length+ "  "+ mSpec['params'].length)
+    //   if (mcParams.length != mSpec['params'].length){
+    //     continue
+    //   }
+    //   v = mSpec['func'].apply(null, mcParams)
       console.log(mc+ " " + v)
       
     }
