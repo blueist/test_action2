@@ -59,7 +59,7 @@ function callMacro(mc){
     return mSpec['func'].apply(null, mcParams)
 }
 
-function test1(){
+function run(){
   const input = core.getInput('input')
   console.log('* read '+input)
                                     
@@ -95,30 +95,11 @@ function test1(){
       v = callMacro(macroCalls[i])
       if(v != null) {
         console.log(macroCalls[i]+ " " + v)
+        data.replace(macroCalls[i], "<!--"+macroCalls[i]+"-->")
+        // changes++
       }
-
-    //   mc = macroCalls[i] // macro call 
-    //   mc = mc.replace(mcCallPrefix, '').replace(mcCallPostfix, '')
-      
-    //   mcTemp = mc.split(',')
-    //   if ( mcTemp.length == 0){
-    //     continue
-    //   } 
-    //   mcName = mcTemp[0]
-    //   mcParams = mcTemp.slice(1)
-    //   if (!( mcName in macros)) {
-    //     continue
-    //   }
-    //   mSpec = macros[mcName]
-    //   console.log(mc+ " " + mSpec+ "  "+ mcParams.length+ "  "+ mSpec['params'].length)
-    //   if (mcParams.length != mSpec['params'].length){
-    //     continue
-    //   }
-    //   v = mSpec['func'].apply(null, mcParams)
-    //   console.log(mc+ " " + v)
-      
     }
-    
+    console.log(data)
     if(changes > 0) {
       fs.writeFile(input, data, 'utf8', function (err) {
         if (err) {
@@ -127,19 +108,6 @@ function test1(){
       });
     }
   });
-
-//   const context = github.context;
-//   console.log("context "+JSON.stringify(context))
-
-//   const payload = github.context.payload;
-//   const ref     = payload.ref;
-//   if (!payload.repository) {
-//       throw new Error();
-//   }
-//   const owner   = payload.repository.owner.login;
-//   const repo    = payload.repository.name;
 }
 
-// const input = core.getInput('input')
-// console.log(input)
-test1()
+run()
