@@ -68,8 +68,8 @@ function run(){
       core.setOutput("changed", 'false');
       return console.log(err);
     }
-    data = data.replace(/(<!--)[^(<!)]+(-->)/g, '') // strip comment
-    macros = data.match(reMacroFinder)
+    data1 = data.replace(/(<!--)[^(<!)]+(-->)/g, '') // strip comment
+    macros = data1.match(reMacroFinder)
     if (macros == null || macros.length == 0){
       core.setOutput("changed", 'false');
       return console.log('* find no macros');
@@ -82,7 +82,7 @@ function run(){
         macros[mcrName] = mcrInfo
       }
     }
-    macroCalls = data.match(reMacroCallFinder)
+    macroCalls = data1.match(reMacroCallFinder)
     if (macroCalls == null || macroCalls.length == 0){
       core.setOutput("changed", 'false');
       return console.log('* find no macro calls');
@@ -95,10 +95,11 @@ function run(){
       v = callMacro(macroCalls[i])
       if(v != null) {
         console.log(macroCalls[i]+ " " + v)
-        data.replace(macroCalls[i], "<!--"+macroCalls[i]+"-->")
+        data.replace(new RegExp(macroCalls[i]), "<!--"+macroCalls[i]+"-->")
         // changes++
       }
     }
+    console.log('-----------------')
     console.log(data)
     if(changes > 0) {
       fs.writeFile(input, data, 'utf8', function (err) {
