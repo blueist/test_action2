@@ -95,7 +95,7 @@ function run(){
       v = callMacro(macroCalls[i])
       if(v != null) {
         console.log(macroCalls[i]+ " " + v)
-        data = data.replace(new RegExp(macroCalls[i]), "<!--"+macroCalls[i]+"-->"+v+"<!--zinno-macro-->")
+        data = data.replace(new RegExp(macroCalls[i], 'g'), "<!--"+macroCalls[i]+"-->"+v+"<!--zinno-macro-->")
         changes++
       }
     }
