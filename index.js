@@ -95,8 +95,8 @@ function run(){
       v = callMacro(macroCalls[i])
       if(v != null) {
         console.log(macroCalls[i]+ " " + v)
-        data = data.replace(new RegExp(macroCalls[i]), "<!--"+macroCalls[i]+"-->"+v)
-        // changes++
+        data = data.replace(new RegExp(macroCalls[i]), "<!--"+macroCalls[i]+"-->"+v+"<!--zinno-macro-->")
+        changes++
       }
     }
     console.log('-----------------')
@@ -106,6 +106,7 @@ function run(){
         if (err) {
           return console.log(err);
         }
+        core.setOutput("changed", 'true');
       });
     }
   });
