@@ -3,7 +3,6 @@ const fs = require('fs')
 const path = require('path');
 const github = require('@actions/github');
 
-//const targetProject = "ZF" 
 const targetProject = "ZREQ"
 
 const mMarker = '```'
@@ -14,17 +13,34 @@ const mPostfix = mMarker
 const mcCallPrefix = mSpliter+'zinno-macro'+mSpliter
 const mcCallPostfix = mSpliter
 
+const reMacroFinder = new RegExp("("+mPrefix+")[^("+mMarker+")]+("+mPostfix+")", 'g')
+const reMacroDefiner = new RegExp("("+mSpliter+")[^("+mSpliter+")]+("+mSpliter+")")
+const reMacroSpliter = new RegExp(mSpliter, 'g')
+const reMacroCallFinder = new RegExp("("+mcCallPrefix+")[^("+mSpliter+")]+("+mSpliter+")", 'g')
+
 var macros = {}
 
-
+function defineMacro(mcr){
+    mcrDef = reMacroDefiner.exec(mcr)
+    if(mcrDef == null || mcrDef.length < 1){
+        console.log('no macro definition :'+mcr)
+        return null
+    }
+    mcrSpec = mcrDef[0].replace(reMacroSpliter, '')
+    mcrSpecTemp = mcrSpec.split(',')
+    if ( mcrSpecTemp.length == 0){
+        console.log('no macro spec :'+mcrSpec)
+        return null
+    }
+    mcrName = mcrSpecTemp[0]
+    mcrParams = mcrSpecTemp.slice(1)
+    mcrBody = mcr.substring(mPrefix.length+mcrSpec.length+mSpliter.length, mcr.length-3)  
+    return [mcrName, {'params':mcrParams, 'body':mcrBody, 'func':new Function(mcrParams, mcrBody)}]
+}
 
 function test1(){
   const input = core.getInput('input')
-  console.log(input)
-  const reMacroFinder = new RegExp("("+mPrefix+")[^("+mMarker+")]+("+mMarker+")", 'g')
-  const reMacroDefiner = new RegExp("("+mSpliter+")[^("+mSpliter+")]+("+mSpliter+")")
-  const reMacroSpliter = new RegExp(mSpliter, 'g')
-  const reMacroCallFinder = new RegExp("("+mcCallPrefix+")[^("+mSpliter+")]+("+mSpliter+")", 'g')
+  console.log('read '+input)
                                     
   fs.readFile(input, 'utf8', function (err,data) {
     if (err) {
@@ -34,24 +50,26 @@ function test1(){
     macros = data.match(reMacroFinder)
     if (macros == null || macros.length == 0){
       core.setOutput("changed", 'false');
-      return
+      return console.log('find no macros');
     }
-    console.log(macros+ " " + macros.length)
+    console.log("find " + macros.length+ " macros" )
+    console.debug(macros)
     for(i =0;i<macros.length;i++){
-      mcr = macros[i]
-      mcrDef = reMacroDefiner.exec(mcr)
-      if(mcrDef == null || mcrDef.length < 1){
-        continue
-      }
-      mcrSpec = mcrDef[0].replace(reMacroSpliter, '')
-      mcrSpecTemp = mcrSpec.split(',')
-      if ( mcrSpecTemp.length == 0){
-        continue
-      }
-      mcrName = mcrSpecTemp[0]
-      mcrParams = mcrSpecTemp.slice(1)
-      mcrBody = mcr.substring(mPrefix.length+mcrSpec.length+mSpliter.length, mcr.length-3)  
-      macros[mcrName] = {'params':mcrParams, 'body':mcrBody, 'func':new Function(mcrParams, mcrBody)}
+      
+      [mcrName, mcrInfo] = defineMacro(macros[i])
+    //   mcrDef = reMacroDefiner.exec(mcr)
+    //   if(mcrDef == null || mcrDef.length < 1){
+    //     continue
+    //   }
+    //   mcrSpec = mcrDef[0].replace(reMacroSpliter, '')
+    //   mcrSpecTemp = mcrSpec.split(',')
+    //   if ( mcrSpecTemp.length == 0){
+    //     continue
+    //   }
+    //   mcrName = mcrSpecTemp[0]
+    //   mcrParams = mcrSpecTemp.slice(1)
+    //   mcrBody = mcr.substring(mPrefix.length+mcrSpec.length+mSpliter.length, mcr.length-3)  
+      macros[mcrName] = mcrInfo
     }
     console.log(macros)
    
@@ -83,6 +101,7 @@ function test1(){
       }
       v = mSpec['func'].apply(null, mcParams)
       console.log(mc+ " " + v)
+      
     }
     
     if(changes > 0) {
