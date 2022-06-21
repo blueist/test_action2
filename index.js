@@ -46,7 +46,7 @@ function test1(){
       mcrSpec = mcrDef[0].replace(reMacroSpliter, '')
       mcrSpecTemp = mcrSpec.split(',')
       if ( mcrSpecTemp.length == 0){
-        return
+        continue
       }
       mcrName = mcrSpecTemp[0]
       mcrParams = mcrSpecTemp.slice(1)
@@ -67,6 +67,21 @@ function test1(){
       mc = macroCalls[i] // macro call 
       mc = mc.replace(mcCallPrefix, '').replace(mcCallPostfix, '')
       console.log(mc)
+      mcTemp = mc.split(',')
+      if ( mcrSpecTemp.length == 0){
+        continue
+      } 
+      mcName = mcTemp[0]
+      mcParams = mcTemp.slice(1)
+      if (!( mcName in macros)) {
+        continue
+      }
+      mSpec = macros[mcName]
+      if (mcParams.length != mSpec['params'].length){
+        continue
+      }
+      v = mSpec['func'].apply(null, mcParams)
+      console.log(mc+ " " + v)
     }
     
     if(changes > 0) {
