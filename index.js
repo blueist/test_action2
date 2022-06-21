@@ -40,12 +40,12 @@ function test1(){
         continue
       }
       mcrSpec = mcrDef[0].replace(reMacroSpliter, '')
-      mcrSpec = mcrSpec.split(',')
-      if ( mcrSpec.length == 0){
+      mcrSpecTemp = mcrSpec.split(',')
+      if ( mcrSpecTemp.length == 0){
         return
       }
-      mcrName = mcrSpec[0]
-      mcrParams = mcrSpec.slice(1)
+      mcrName = mcrSpecTemp[0]
+      mcrParams = mcrSpecTemp.slice(1)
       mcrBody = mcr.substring(mPrefix.length+mcrSpec.length+mSpliter.length, mcr.length-3)
       console.log("***")   
       console.log(mcr)   
