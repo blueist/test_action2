@@ -66,7 +66,7 @@ function test1(){
     for(i =0;i<macroCalls.length;i++){
       mc = macroCalls[i] // macro call 
       mc = mc.replace(mcCallPrefix, '').replace(mcCallPostfix, '')
-      console.log(mc)
+      
       mcTemp = mc.split(',')
       if ( mcrSpecTemp.length == 0){
         continue
@@ -77,6 +77,7 @@ function test1(){
         continue
       }
       mSpec = macros[mcName]
+      console.log(mc+ " " + mSpec+ "  "+ mcParams.length+ "  "+ mSpec['params'].length)
       if (mcParams.length != mSpec['params'].length){
         continue
       }
