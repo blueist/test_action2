@@ -28,26 +28,21 @@ function test1(){
     if (err) {
       return console.log(err);
     }
-    
-    //console.log(data);
-    //var result = data.replace(/blueist/g, 'stillblueist');
-    mcrs = data.match(reMacroFinder)
-    if (mcrs == null){
+    macros = data.match(reMacroFinder)
+    if (macros == null || macros.length == 0){
       return
     }
-    console.log(mcrs+ " " + mcrs.length)
-    for(i =0;i<mcrs.length;i++){
-      mcr = mcrs[i]
+    console.log(macros+ " " + macros.length)
+    for(i =0;i<macros.length;i++){
+      mcr = macros[i]
       mcrDef = reMacroDefiner.exec(mcr)
-
       if(mcrDef == null || mcrDef.length < 1){
         continue
       }
-   
       mcrSpec = mcrDef[0].replace(reMacroSpliter, '')
       console.log(mcrSpec)   
       console.log(mcrDef+ " " + mcr)      
-      console.log(mcr.substring(mcrDef[0].length + 3 + 11, mcr.length-3))
+      console.log(mcr.substring(mPrefix.length+mcrSpec.length+mSpliter.length, mcr.length-3))
     }
     
    
