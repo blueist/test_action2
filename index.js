@@ -68,6 +68,7 @@ function test1(){
       core.setOutput("changed", 'false');
       return console.log(err);
     }
+    data = data.replace(/(<!--)[^(<!)]+(-->)/g, '') // strip comment
     macros = data.match(reMacroFinder)
     if (macros == null || macros.length == 0){
       core.setOutput("changed", 'false');
