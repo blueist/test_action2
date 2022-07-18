@@ -59,6 +59,26 @@ function callMacro(mc){
     return mSpec['func'].apply(null, mcParams)
 }
 
+function doComments(data){
+    // (<!--.*?-->)|(<!--[\S\s]+?-->)|(<!--[\S\s]*?$)
+    comments = {}
+    reComment = new RegExp('(<!--.*?-->)|(<!--[\S\s]+?-->)|(<!--[\S\s]*?$)', 'g')
+    data1 = data.replace(reComment, each=> {
+      key=":_:"+Math.random().toString(36)+":_:"
+      comments[key] = each
+      return key
+    }) // remove comment and store for restoring 
+    return [comments, data1]
+} 
+
+function restoreComments(data, comments){
+  for (each in comments){
+    data = data.replace(each, comments[each])
+  }
+  return data
+} 
+
+
 function run(){
   const input = core.getInput('input')
   console.log('* read '+input)
@@ -68,7 +88,8 @@ function run(){
       core.setOutput("changed", 'false');
       return console.log(err);
     }
-    data1 = data.replace(/(<!--)[^(<!)]+(-->)/g, '') // strip comment
+
+    [comments, data1] = doComments(data)
     macros = data1.match(reMacroFinder)
     if (macros == null || macros.length == 0){
       core.setOutput("changed", 'false');
@@ -82,6 +103,7 @@ function run(){
         macros[mcrName] = mcrInfo
       }
     }
+
     macroCalls = data1.match(reMacroCallFinder)
     if (macroCalls == null || macroCalls.length == 0){
       core.setOutput("changed", 'false');
@@ -95,13 +117,15 @@ function run(){
       v = callMacro(macroCalls[i])
       if(v != null) {
         console.log(macroCalls[i]+ " " + v)
-        data = data.replace(new RegExp(macroCalls[i], 'g'), "<!--"+macroCalls[i]+"-->"+v+"<!--zinno-macro-->")
+        data1 = data1.replace(new RegExp(macroCalls[i], 'g'), "<!--"+macroCalls[i]+"-->"+v+"<!--zinno-macro-->")
         changes++
       }
     }
     console.log('-----------------')
     console.log(data)
     if(changes > 0) {
+      data = restoreComments(data1, comments)
+
       fs.writeFile(input, data, 'utf8', function (err) {
         if (err) {
           return console.log(err);
